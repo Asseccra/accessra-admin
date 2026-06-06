@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isEmailVerified() && (
+        request.auth.token.email == "jigongasem3@gmail.com"
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Entity Validation Helpers ---
+
+    function isValidProduct(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.title is string && data.title.size() <= 100
+        && (data.price is int || data.price is float) && data.price >= 0
+        && data.stock is int && data.stock >= 0
+        && data.status is string && (data.status == "Active" || data.status == "Draft" || data.status == "Archived");
+    }
+
+    function isValidOrder(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.productId is string && data.productId.size() <= 128
+        && data.customerEmail is string && data.customerEmail.size() <= 128
+        && (data.amount is int || data.amount is float) && data.amount >= 0
+        && data.paymentStatus is string && (data.paymentStatus == "Paid" || data.paymentStatus == "Pending" || data.paymentStatus == "Failed" || data.paymentStatus == "Refunded");
+    }
+
+    function isValidUser(data) {
+      return data.id is string && data.id.size() <= 128
+        && data.email is string && data.email.size() <= 128
+        && data.role is string && (data.role == "Super Admin" || data.role == "Staff" || data.role == "User")
+        && data.status is string && (data.status == "Active" || data.status == "Suspended" || data.status == "Banned");
+    }
+
+    // --- Collection Routes ---
+
+    // 1. PRODUCTS
+    match /products/{productId} {
+      allow read: if isSignedIn();
+      allow create: if isAdmin() && isValidId(productId) && isValidProduct(incoming());
+      allow update: if isAdmin() && isValidProduct(incoming()) && (
+        // Enforce immutability of core fields
+        incoming().id == existing().id
+      );
+      allow delete: if isAdmin();
+    }
+
+    // 2. ORDERS
+    match /orders/{orderId} {
+      allow read, list: if isSignedIn() && (isAdmin() || resource.data.customerEmail == request.auth.token.email);
+      allow create: if isSignedIn() && isValidId(orderId) && isValidOrder(incoming());
+      allow update: if isSignedIn() && isValidOrder(incoming()) && (
+        isAdmin() || (
+          // Standard customer can only update status if it's pending, but let's constrain the specific update fields
+          existing().paymentStatus == "Pending" &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['paymentStatus'])
+        )
+      );
+      allow delete: if isAdmin();
+    }
+
+    // 3. USERS
+    match /users/{userId} {
+      allow read: if isSignedIn() && (isAdmin() || userId == request.auth.uid);
+      allow create: if isSignedIn() && userId == request.auth.uid && isValidId(userId) && isValidUser(incoming()) && (
+        // Prevent self-privilege escalation (default role must be User)
+        incoming().role == "User"
+      );
+      allow update: if isSignedIn() && (
+        // Admins can update roles
+        (isAdmin() && isValidUser(incoming())) ||
+        // Regular user can update their nickname etc, but cannot change role, status, email or id
+        (userId == request.auth.uid && isValidUser(incoming()) && (
+          incoming().role == existing().role &&
+          incoming().status == existing().status &&
+          incoming().email == existing().email &&
+          incoming().id == existing().id
+        ))
+      );
+      allow delete: if isAdmin();
+    }
+  }
+}

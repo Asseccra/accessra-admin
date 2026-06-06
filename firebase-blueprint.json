@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Product inventory item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "promoPrice": { "type": "number" },
+        "stock": { "type": "number" },
+        "autoStock": { "type": "boolean" },
+        "status": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "deliveryType": { "type": "string" },
+        "deliveryContent": { "type": "string" }
+      },
+      "required": ["id", "title", "price", "stock", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer digital purchase order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "productId": { "type": "string" },
+        "productTitle": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string" },
+        "paymentGateway": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "orderStatus": { "type": "string" },
+        "referenceId": { "type": "string" }
+      },
+      "required": ["id", "customerEmail", "productId", "amount", "paymentStatus"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered user profile details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "status": { "type": "string" },
+        "joinedDate": { "type": "string" },
+        "referralCode": { "type": "string" },
+        "referralsCount": { "type": "number" },
+        "balance": { "type": "number" }
+      },
+      "required": ["id", "email", "role", "status"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Main digital product inventory database"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Transactions and digital checkout records"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Identities and user directory"
+    }
+  }
+}

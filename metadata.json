@@ -1,0 +1,6 @@
+{
+  "name": "Accessra Admin",
+  "description": "Futuristic admin dashboard panel for the Accessra Digital marketplace, complete with product, order, payment gateway, promotion, security, user management, support, and analytics capabilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

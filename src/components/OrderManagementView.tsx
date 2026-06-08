@@ -22,9 +22,9 @@ export default function OrderManagementView({ orders, onVerifyOrder, onRefundOrd
 
   const filteredOrders = orders.filter(order => {
     const matchesSearch =
-      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customerEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.productTitle.toLowerCase().includes(searchTerm.toLowerCase());
+      String(order.id || "").toLowerCase()
+      String(order.customerEmail || "").toLowerCase()
+      String(order.productTitle || "").toLowerCase()
     
     if (selectedStatus === "All") return matchesSearch;
     return matchesSearch && order.paymentStatus === selectedStatus;

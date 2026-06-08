@@ -27,9 +27,9 @@ export default function UserManagementView({
 
   const filteredUsers = users.filter(usr => {
     const matchesSearch =
-      usr.name.toLowerCase().includes(search.toLowerCase()) ||
-      usr.email.toLowerCase().includes(search.toLowerCase()) ||
-      usr.referralCode.toLowerCase().includes(search.toLowerCase());
+        String(usr.name || "").toLowerCase().includes(search.toLowerCase()) ||
+        String(usr.email || "").toLowerCase().includes(search.toLowerCase()) ||
+        String(usr.referralCode || "").toLowerCase().includes(search.toLowerCase());
     
     if (selectedRole === "All") return matchesSearch;
     return matchesSearch && usr.role === selectedRole;

@@ -4,6 +4,8 @@
  */
 
 import { useState, useEffect } from "react";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 import { motion, AnimatePresence } from "motion/react";
 import {
   LayoutDashboard,
@@ -266,9 +268,27 @@ export default function App() {
   }, [isAuthenticated, users, products]);
 
   // Product actions handlers
-  const handleAddProduct = (prod: Product) => {
-    setProducts(prev => [prod, ...prev]);
-  };
+  const handleAddProduct = async (prod: Product) => {
+  try {
+    const p: any = prod;
+
+    const docRef = await addDoc(collection(db, "products"), {
+      ...p,
+      price: Number(p.price || 0),
+      originalPrice: Number(p.originalPrice || p.price || 0),
+      discountPercent: Number(p.discountPercent || 0),
+      rating: Number(p.rating || 4.8),
+      ratingCount: Number(p.ratingCount || 0),
+      stock: Number(p.stock || 99999),
+      status: p.status || "active",
+      createdAt: serverTimestamp()
+    });
+
+    setProducts(prev => [{ ...prod, id: docRef.id }, ...prev]);
+  } catch (error) {
+    console.error("Gagal tambah produk:", error);
+  }
+};
   const handleUpdateProduct = (prod: Product) => {
     setProducts(prev => prev.map(p => (p.id === prod.id ? prod : p)));
   };

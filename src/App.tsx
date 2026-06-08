@@ -471,6 +471,24 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-800 flex relative overflow-hidden font-sans">
+
+      {adminRole === "admin" && (
+    <div
+      style={{
+        background: "red",
+        color: "white",
+        padding: "10px",
+        fontWeight: "bold",
+        position: "fixed",
+        top: "10px",
+        right: "10px",
+        zIndex: 9999
+      }}
+    >
+      ADMIN TERDETEKSI
+    </div>
+      )}
+
       {/* GLOBAL MAINTENANCE DECORATOR BLOCK */}
       {appSettings.maintenanceMode && (
         <div className="fixed top-0 inset-x-0 bg-amber-500 font-sans text-xs text-center font-bold tracking-wide text-white py-1.5 z-50 flex items-center justify-center gap-2 shadow-sm">

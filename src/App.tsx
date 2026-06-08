@@ -254,7 +254,7 @@ export default function App() {
       // Trigger dynamic toast header visual notifier
       setLiveNotification({
         title: "REALTIME TRANSACTION DISPATCHED",
-        desc: `${targetUser.name} bought "${targetProduct.title}" worth $${orderAmount.toFixed(2)}.`
+        desc: `${targetUser.name} bought "${targetProduct.title}" worth Rp ${Number(orderAmount).toLocaleString("id-ID")}.`
       });
 
       // Auto dismiss notifier toast in 6 seconds

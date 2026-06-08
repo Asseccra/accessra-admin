@@ -194,12 +194,18 @@ export default function ProductManagementView({
                 <div className="flex flex-col">
                   {prod.promoPrice ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-bold font-mono text-sky-600">${prod.promoPrice}</span>
-                      <span className="text-xs line-through font-mono text-slate-400">${prod.price}</span>
+                      <span className="text-base font-bold font-mono text-sky-600">
+                        Rp {Number(prod.promoPrice).toLocaleString("id-ID")}
+                      </span>
+                      <span className="text-xs line-through font-mono text-slate-400">
+                        Rp {Number(prod.price).toLocaleString("id-ID")}
+                      </span>
                     </div>
                   ) : (
-                    <span className="text-base font-bold font-mono text-slate-800">${prod.price}</span>
-                  )}
+                      <span className="text-base font-bold font-mono text-slate-800">
+                        Rp {Number(prod.price).toLocaleString("id-ID")}
+                      </span>
+                   )}
                   <span className="text-[10px] text-slate-400 font-bold font-mono mt-0.5">
                     Stock: {prod.autoStock ? "∞ Unbounded" : `${prod.stock} items left`}
                   </span>

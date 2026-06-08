@@ -227,7 +227,9 @@ export default function OrderManagementView({ orders, onVerifyOrder, onRefundOrd
                 </div>
                 <div className="flex justify-between font-bold text-slate-850">
                   <span>{activeInvoice.productTitle}</span>
-                  <span className="font-mono text-xs">${activeInvoice.amount.toFixed(2)}</span>
+                  <span className="font-mono text-xs">
+                    Rp {Number(activeInvoice.amount).toLocaleString("id-ID")}
+                  </span>
                 </div>
                 <div className="flex justify-between text-[10px] text-slate-400 font-medium">
                   <span>Instant Delivery License Package</span>
@@ -239,15 +241,20 @@ export default function OrderManagementView({ orders, onVerifyOrder, onRefundOrd
               <div className="text-right text-xs space-y-1">
                 <div className="flex justify-between">
                   <span className="text-slate-450">Subtotal:</span>
-                  <span className="text-slate-850 font-bold">${activeInvoice.amount.toFixed(2)}</span>
+                  <span className="text-slate-850 font-bold">
+                    Rp {Number(activeInvoice.amount).toLocaleString("id-ID")}
+                  </span>
                 </div>
                 <div className="flex justify-between text-[10px] text-slate-400 pb-1 border-b border-slate-100">
                   <span>Processing gateway taxes:</span>
-                  <span>$0.00</span>
+                  <span>Rp 0</span>
                 </div>
                 <div className="flex justify-between text-xs font-extrabold pt-2">
                   <span className="text-sky-600">Total Invoice Amount:</span>
-                  <span className="text-slate-850 font-extrabold text-sm">${activeInvoice.amount.toFixed(2)}</span>
+                  <span className="text-slate-850 font-extrabold text-sm"><span className="text-slate-850 font-bold">
+                    Rp {Number(activeInvoice.amount).toLocaleString("id-ID")}
+                 </span>
+                 </span>
                 </div>
               </div>
 

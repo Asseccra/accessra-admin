@@ -109,7 +109,9 @@ export default function OrderManagementView({ orders, onVerifyOrder, onRefundOrd
                         {order.paymentGateway}
                       </span>
                     </td>
-                    <td className="p-4 text-slate-800 font-extrabold font-mono text-sm">${order.amount.toFixed(2)}</td>
+                    <td className="p-4 text-slate-800 font-extrabold font-mono text-sm">
+                      Rp {Number(order.amount || 0).toLocaleString("id-ID")}
+                      </td>
                     <td className="p-4">
                       <div className="flex flex-col gap-1">
                         <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${

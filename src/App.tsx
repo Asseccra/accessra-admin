@@ -213,77 +213,10 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [liveNotification, setLiveNotification] = useState<{ title: string; desc: string } | null>(null);
 
-  // SIMULATE REALTIME PURCHASES ON THE MARKETPLACE
-  useEffect(() => {
-    if (!isAuthenticated) return;
 
-    const interval = setInterval(() => {
-      // Pick random active customer
-      const targetUser = users[Math.floor(Math.random() * users.length)];
-      if (!targetUser || targetUser.role === "Staff") return;
-
-      // Pick random active product
-      const targetProduct = products.filter(p => p.status === "Active")[
-        Math.floor(Math.random() * products.filter(p => p.status === "Active").length)
-      ];
-      if (!targetProduct) return;
-
-      const orderAmount = targetProduct.promoPrice || targetProduct.price;
-      const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
-      const gateways: Array<"Duitku" | "Xendit" | "Midtrans"> = ["Duitku", "Xendit", "Midtrans"];
-      const randomGateway = gateways[Math.floor(Math.random() * gateways.length)];
-
-      const newOrder: Order = {
-        id: orderId,
-        customerEmail: targetUser.email,
-        productId: targetProduct.id,
-        productTitle: targetProduct.title,
-        amount: orderAmount,
-        date: new Date().toISOString(),
-        paymentGateway: randomGateway,
-        paymentStatus: targetProduct.autoStock ? "Paid" : "Pending",
-        orderStatus: targetProduct.autoStock ? "Completed" : "Pending Verification",
-        referenceId: `sys-ref-${Math.floor(100000 + Math.random() * 900000)}`
-      };
-
-      // Append new order state
-      setOrders(prev => [newOrder, ...prev]);
-
-      // Add user activity log history
-      setUsers(prevUsers =>
-        prevUsers.map(u => {
-          if (u.id === targetUser.id) {
-            return {
-              ...u,
-              activityLog: [
-                {
-                  action: `Initiated checkout for product "${targetProduct.title}" (${randomGateway})`,
-                  timestamp: new Date().toISOString(),
-                  ip: targetUser.activityLog[0]?.ip || "127.0.0.1"
-                },
-                ...u.activityLog
-              ]
-            };
-          }
-          return u;
-        })
-      );
-
-      // Trigger dynamic toast header visual notifier
-      setLiveNotification({
-        title: "REALTIME TRANSACTION DISPATCHED",
-        desc: `${targetUser.name} bought "${targetProduct.title}" worth Rp ${Number(orderAmount).toLocaleString("id-ID")}.`
-      });
 
       // Auto dismiss notifier toast in 6 seconds
-      setTimeout(() => {
-        setLiveNotification(null);
-      }, 6000);
-
-    }, 45000); // trigger every 45s
-
-    return () => clearInterval(interval);
-  }, [isAuthenticated, users, products]);
+      
 
  const handleAddProduct = async (prod: Product) => {
   try {

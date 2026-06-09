@@ -194,14 +194,14 @@ export default function App() {
   // Validate the connection to firestore on boot
   useEffect(() => {
   const unsubscribe = onSnapshot(
-    query(collection(db, "orders"), orderBy("createdAt", "desc")),
+    collection(db, "products"),
     (snapshot) => {
-      const realtimeOrders = snapshot.docs.map(doc => ({
+      const firestoreProducts = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
-      })) as Order[];
+      })) as Product[];
 
-      setOrders(realtimeOrders);
+      setProducts(firestoreProducts);
     }
   );
 

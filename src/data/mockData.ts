@@ -5,77 +5,8 @@
 
 import { Product, Order, User, SupportTicket, PromoVoucher, FlashSale, DeviceInfo } from "../types";
 
-export const initialProducts: Product[] = [
-  {
-    id: "prod-101",
-    title: "Accessra Cloud AI Booster",
-    description: "Unlocks high-performance computing resources and pre-trained models for instant API responses. Seamlessly boots microservices.",
-    category: "SaaS",
-    price: 149.0,
-    promoPrice: 99.0,
-    stock: 50,
-    autoStock: true,
-    status: "Active",
-    thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&auto=format&fit=crop&q=60",
-    deliveryType: "Instant Key",
-    deliveryContent: "KEY-AI-BOOST-83FHA92-XP92"
-  },
-  {
-    id: "prod-102",
-    title: "Next.js SaaS Boilerplate (Elite Edition)",
-    description: "Production-ready boilerplates containerized with PostgreSQL, Firebase, Stripe webhook integrations, and Tailwind styling.",
-    category: "Templates",
-    price: 79.0,
-    promoPrice: 49.0,
-    stock: 200,
-    autoStock: true,
-    status: "Active",
-    thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&auto=format&fit=crop&q=60",
-    deliveryType: "Download Link",
-    deliveryContent: "https://accessra.digital/dl/nextjs-saas-elite-v4.zip"
-  },
-  {
-    id: "prod-103",
-    title: "Google Workspace API Key Injector",
-    description: "Automated Chrome extension token integration for managing calendar, tasks, and Google drive spreadsheet synchronization.",
-    category: "API Keys",
-    price: 29.0,
-    stock: 120,
-    autoStock: true,
-    status: "Active",
-    thumbnail: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400&auto=format&fit=crop&q=60",
-    deliveryType: "Credentials",
-    deliveryContent: "Client-Id: 9811-accessra.google.com\nSecret: GOCSPX-u981jas"
-  },
-  {
-    id: "prod-104",
-    title: "Advanced Tailwind Web3 UI Library",
-    description: "300+ custom glowing responsive UI components designed strictly with Glassmorphism, tailored for modern cryptocurrency apps.",
-    category: "Templates",
-    price: 199.0,
-    promoPrice: 129.0,
-    stock: 0,
-    autoStock: false,
-    status: "Archived",
-    thumbnail: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&auto=format&fit=crop&q=60",
-    deliveryType: "Download Link",
-    deliveryContent: "https://accessra.digital/dl/web3-ui-kit.zip"
-  },
-  {
-    id: "prod-105",
-    title: "Fullstack LLM Engineering Course",
-    description: "Complete course covering prompt engineering, RAG, function calling, vector databases, and full deployment structures.",
-    category: "Courses",
-    price: 199.0,
-    promoPrice: 159.0,
-    stock: 1000,
-    autoStock: true,
-    status: "Active",
-    thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&auto=format&fit=crop&q=60",
-    deliveryType: "Download Link",
-    deliveryContent: "https://accessra.digital/courses/llm-en-bundle"
-  }
-];
+export const initialProducts: Product[] = [];
+  
 
 export const initialOrders: Order[] = [
   {

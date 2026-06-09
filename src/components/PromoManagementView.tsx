@@ -48,7 +48,7 @@ export default function PromoManagementView({
 
     const newVoucher: PromoVoucher = {
       id: `vch-${Date.now()}`,
-      code: code.toUpperCase().replace(/\s+/g, ""),
+      code: String(code || "").toUpperCase().replace(/\s+/g, ""),
       discountType,
       value: parseFloat(value),
       minPurchase: parseFloat(minPurchase) || 0,

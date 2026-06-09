@@ -234,7 +234,7 @@ export default function DashboardView({ products, orders, users, setActiveTab }:
                 <div className="text-right flex items-center gap-4">
                   <div>
                     <span className="text-xs font-mono font-bold text-slate-850">${order.amount.toFixed(2)}</span>
-                    <p className="text-[9px] text-slate-400 font-mono tracking-wider">{order.paymentGateway.toUpperCase()}</p>
+                    <p className="text-[9px] text-slate-400 font-mono tracking-wider">{String(order.paymentGateway || "-").toUpperCase()}</p>
                   </div>
                   <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-mono font-bold ${
                     order.paymentStatus === "Paid"

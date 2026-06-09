@@ -104,7 +104,7 @@ export default function CustomerSupportView({ tickets, onReplyTicket, onResolveT
                   }`}
                 >
                   <div className="flex items-center justify-between font-mono text-[9px] text-slate-400 font-bold">
-                    <span>{t.id} &bull; {t.channel.toUpperCase()}</span>
+                    <span>{t.id} &bull; {String(t.channel || "-").toUpperCase()}</span>
                     <span className={`px-2 py-0.5 rounded-full text-[8px] font-extrabold ${
                       t.status === "Open" ? "bg-rose-50 text-rose-600 border border-rose-100" :
                       t.status === "Processing" ? "bg-amber-50 text-amber-650 border border-amber-100" :
@@ -178,7 +178,7 @@ export default function CustomerSupportView({ tickets, onReplyTicket, onResolveT
                       className={`flex flex-col max-w-[80%] ${isAdmin ? "ml-auto items-end" : "mr-auto items-start"}`}
                     >
                       <span className="text-[10px] text-slate-400 font-mono mb-1 select-none font-bold">
-                        {isAdmin ? "SUPPORT AGENT" : activeTicket.customerName.toUpperCase()} &bull; {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {isAdmin ? "SUPPORT AGENT" : String(activeTicket.customerName || "-").toUpperCase()} &bull; {new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       
                       <div className={`p-3.5 rounded-2xl font-sans ${

@@ -292,7 +292,7 @@ function EditUserModal({ user, onClose, onSave }: EditUserModalProps) {
       email: email.trim(),
       role,
       status,
-      referralCode: referralCode.trim().toUpperCase(),
+      referralCode: String(referralCode || "").trim().toUpperCase(),
       referralsCount: Number(referralsCount),
       balance: Number(balance)
     });

@@ -214,7 +214,7 @@ export default function OrderManagementView({ orders, onVerifyOrder, onRefundOrd
                 </div>
                 <div className="text-right">
                   <span className="text-slate-400 font-bold uppercase text-[9px] tracking-wider block mb-0.5">Payment Platform:</span>
-                  <span className="text-slate-850 font-bold block">{activeInvoice.paymentGateway.toUpperCase()}</span>
+                  <span className="text-slate-850 font-bold block">{activeInvoice.paymentGateway?.toUpperCase() || "-"}</span>
                   <span className="text-[10px] text-slate-400 font-mono mt-0.5 block break-all">Ref: {activeInvoice.referenceId}</span>
                 </div>
               </div>

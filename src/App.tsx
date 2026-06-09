@@ -4,7 +4,14 @@
  */
 
 import { useState, useEffect } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  addDoc,
+  serverTimestamp
+} from "firebase/firestore";
 import { db } from "./firebase/firebase";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -176,7 +183,7 @@ export default function App() {
 
   // Global Interactive Databases States
   const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [tickets, setTickets] = useState<SupportTicket[]>(initialTickets);
   const [vouchers, setVouchers] = useState<PromoVoucher[]>(initialVouchers);
@@ -186,8 +193,20 @@ export default function App() {
 
   // Validate the connection to firestore on boot
   useEffect(() => {
-    testConnection();
-  }, []);
+  const unsubscribe = onSnapshot(
+    query(collection(db, "orders"), orderBy("createdAt", "desc")),
+    (snapshot) => {
+      const realtimeOrders = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Order[];
+
+      setOrders(realtimeOrders);
+    }
+  );
+
+  return () => unsubscribe();
+}, []);
 
   // Layout Controls
   const [activeTab, setActiveTab] = useState("dashboard");

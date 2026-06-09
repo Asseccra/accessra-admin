@@ -317,14 +317,14 @@ const formattedProduct: any = {
     onChange={(e) => setCategory(e.target.value)}
     className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-sky-500 text-slate-800"
   >
-    <option value="voucher_game">Voucher Game</option>
-    <option value="pulsa_seluler">Pulsa Seluler</option>
-    <option value="paket_data">Paket Data</option>
-    <option value="e_wallet_refill">E-Wallet Refill</option>
-    <option value="media_streaming">Media Streaming</option>
-    <option value="software_lisensi">Software Lisensi</option>
-    <option value="giftcard_voucher">Gift Card Voucher</option>
-    <option value="sosial_media">Sosial Media</option>
+<option value="voucher_game">Voucher Game</option>
+<option value="pulsa">Pulsa</option>
+<option value="paket_data">Paket Data</option>
+<option value="ewallet">E-Wallet</option>
+<option value="streaming">Streaming</option>
+<option value="software">Software</option>
+<option value="giftcard">Gift Card</option>
+<option value="social_media">Sosmed Booster</option>
   </select>
 </div>
               </div>

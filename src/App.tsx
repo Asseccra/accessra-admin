@@ -35,7 +35,6 @@ import { Product, Order, User, SupportTicket, PromoVoucher, FlashSale, DeviceInf
 
 // Static Default Datasets
 import {
-  initialProducts,
   initialOrders,
   initialUsers,
   initialTickets,
@@ -176,7 +175,7 @@ export default function App() {
   };
 
   // Global Interactive Databases States
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [tickets, setTickets] = useState<SupportTicket[]>(initialTickets);

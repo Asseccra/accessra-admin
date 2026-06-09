@@ -208,6 +208,34 @@ export default function App() {
   return () => unsubscribe();
 }, []);
 
+useEffect(() => {
+  const unsubscribe = onSnapshot(collection(db, "orders"), (snapshot) => {
+    const realtimeOrders = snapshot.docs.map((doc) => {
+      const data: any = doc.data();
+
+      return {
+        id: data.id || data.orderId || doc.id,
+        customerEmail: data.customerEmail || data.userEmail || "-",
+        productId: data.productId || "-",
+        productTitle: data.productTitle || data.productName || "-",
+        amount: Number(data.amount || data.price || 0),
+        date:
+          data.date ||
+          data.createdAt?.toDate?.()?.toISOString?.() ||
+          new Date().toISOString(),
+        paymentGateway: data.paymentGateway || data.paymentMethod || "-",
+        paymentStatus: data.paymentStatus || "Pending",
+        orderStatus: data.orderStatus || "Pending Verification",
+        referenceId: data.referenceId || data.providerRef || data.orderId || doc.id,
+      };
+    }) as Order[];
+
+    setOrders(realtimeOrders);
+  });
+
+  return () => unsubscribe();
+}, []);
+
   // Layout Controls
   const [activeTab, setActiveTab] = useState("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -27,7 +27,7 @@ export default function ProductManagementView({
   // Form State
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("SaaS");
+  const [category, setCategory] = useState("voucher_game");
   const [price, setPrice] = useState("");
   const [promoPrice, setPromoPrice] = useState("");
   const [stock, setStock] = useState("");
@@ -37,25 +37,29 @@ export default function ProductManagementView({
   const [deliveryType, setDeliveryType] = useState<"Instant Key" | "Download Link" | "Credentials">("Instant Key");
   const [deliveryContent, setDeliveryContent] = useState("");
 
-  const categories = ["All", "SaaS", "Templates", "API Keys", "Courses", "E-books"];
-  const thumbnailOptions = [
-    { label: "Neural Flow Banner", url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&q=80" },
-    { label: "SaaS Blueprint Abstract", url: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400&q=80" },
-    { label: "Developer Blue Neon", url: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&q=80" },
-    { label: "Cyber Terminal Art", url: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&q=80" }
-  ];
+  const categories = [
+  { value: null, label: 'Semua Kategori' },
+  { value: "voucher_game", label: "Voucher Game" },
+  { value: "pulsa_seluler", label: "Pulsa Seluler" },
+  { value: "paket_data", label: "Paket Data" },
+  { value: "e-wallet_refill", label: "E-Wallet Refill" },
+  { value: "media_streaming", label: "Media Streaming" },
+  { value: "software_lisensi", label: "Software Lisensi" },
+  { value: "giftcard_voucher", label: "Gift Card Voucher" },
+  { value: "sosial_media", label: "Sosial Media" }
+];
 
   const handleOpenAdd = () => {
     setEditingProduct(null);
     setTitle("");
     setDescription("");
-    setCategory("SaaS");
+    setCategory("voucher_game");
     setPrice("49.00");
     setPromoPrice("");
     setStock("100");
     setAutoStock(true);
     setStatus("Active");
-    setThumbnail(thumbnailOptions[0].url);
+    setThumbnail();
     setDeliveryType("Instant Key");
     setDeliveryContent("ACCESSRA-DEMO-LICENSE-KEY");
     setIsModalOpen(true);
@@ -91,7 +95,7 @@ export default function ProductManagementView({
       stock: autoStock ? 99999 : parseInt(stock) || 0,
       autoStock,
       status,
-      thumbnail: thumbnail || thumbnailOptions[0].url,
+      thumbnail: thumbnail || thumbnail[0].url,
       deliveryType,
       deliveryContent
     };
@@ -368,7 +372,7 @@ export default function ProductManagementView({
               <div>
                 <label className="block text-slate-500 text-[10px] uppercase mb-2 font-bold">Thumbnail Graphic selection</label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
-                  {thumbnailOptions.map((opt) => (
+                  {thumbnail.map((opt) => (
                     <button
                       key={opt.label}
                       type="button"

@@ -267,20 +267,43 @@ export default function App() {
     return () => clearInterval(interval);
   }, [isAuthenticated, users, products]);
 
-  // Product actions handlers
-  const handleAddProduct = async (prod: Product) => {
+ const handleAddProduct = async (prod: Product) => {
   try {
     const p: any = prod;
 
     const docRef = await addDoc(collection(db, "products"), {
       ...p,
-      price: Number(p.price || 0),
-      originalPrice: Number(p.originalPrice || p.price || 0),
+
+      title: p.title || p.name || "Produk Digital",
+      name: p.title || p.name || "Produk Digital",
+
+      category: p.category || "software",
+      categoryName: p.categoryName || p.category || "Software",
+      type: p.type || "software",
+
+      deliveryType: p.deliveryType || "Instant Key",
+      deliveryContent: p.deliveryContent || "",
+
+      price: Number(p.promoPrice || p.price || 0),
+      originalPrice: Number(p.price || p.originalPrice || 0),
+      promoPrice: Number(p.promoPrice || p.price || 0),
+
       discountPercent: Number(p.discountPercent || 0),
       rating: Number(p.rating || 4.8),
       ratingCount: Number(p.ratingCount || 0),
-      stock: Number(p.stock || 99999),
-      status: p.status || "active",
+
+      autoStock: p.autoStock ?? true,
+      stock: p.autoStock ? 99999 : Number(p.stock || 0),
+
+      thumbnail: p.thumbnail || "",
+      description: p.description || "",
+      inputPlaceholder: p.inputPlaceholder || "Masukkan data tujuan",
+      processTime: p.processTime || "Otomatis",
+
+      features: p.features || ["Legal 100%", "Proses Otomatis", "CS 24/7"],
+      reviews: p.reviews || [],
+
+      status: "active",
       createdAt: serverTimestamp()
     });
 
@@ -444,7 +467,8 @@ export default function App() {
     setDeviceInfos(prev => prev.filter(d => d.id !== id));
   };
 
-  const handleSignOutAllDevices = () => {
+  const handleSignOutAllDevices = () => { // Product actions handlers
+  
     setDeviceInfos(prev =>
       prev.filter(d => d.adminEmail !== adminEmail || d.ip === "182.16.8.21" || d.ip === "127.0.0.1")
     );
